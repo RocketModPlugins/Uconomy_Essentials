@@ -43,6 +43,13 @@ namespace Uconomy_Essentials
                 {
                     // We are going to remove currency for the suicide
                     decimal loss = (decimal)Uconomy_Essentials.Instance.Configuration.Instance.LoseSuicideAmt * -1.0m;
+                    if (Uconomy_Essentials.Instance.Configuration.Instance.LosePercentageToggle)
+                    {
+                        if (!(Uconomy_Essentials.Instance.Configuration.Instance.LoseSuicideAmt > 100.00))
+                        {
+                            loss = ((decimal)Uconomy_Essentials.Instance.Configuration.Instance.LoseSuicideAmt / 100) * bal * -1.0m;
+                        }
+                    }
                     if (bal + loss < 0.0m) loss = bal * -1.0m;
                     decimal bal1 = u.Database.IncreaseBalance(player.CSteamID.ToString(), loss);
                     Uconomy_Essentials.HandleEvent(player, (loss * -1.0m), "loss");
@@ -58,6 +65,13 @@ namespace Uconomy_Essentials
                 if (Uconomy_Essentials.Instance.Configuration.Instance.LoseMoneyOnDeath)
                 {
                     decimal loss = (decimal)Uconomy_Essentials.Instance.Configuration.Instance.LoseMoneyOnDeathAmt * -1.0m;
+                    if (Uconomy_Essentials.Instance.Configuration.Instance.LosePercentageToggle)
+                    {
+                        if (!(Uconomy_Essentials.Instance.Configuration.Instance.LoseSuicideAmt > 100.00))
+                        {
+                            loss = ((decimal)Uconomy_Essentials.Instance.Configuration.Instance.LoseMoneyOnDeathAmt / 100) * bal * -1.0m;
+                        }
+                    }
                     if (bal + loss < 0.0m) loss = bal * -1.0m;
                     decimal lostbal = u.Database.IncreaseBalance(player.CSteamID.ToString(), loss);
                     Uconomy_Essentials.HandleEvent(player, (loss * -1.0m), "loss");
