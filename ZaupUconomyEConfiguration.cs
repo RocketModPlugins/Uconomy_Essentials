@@ -7,6 +7,7 @@ namespace Uconomy_Essentials
 {
     public class UconomyEConfiguration : IRocketPluginConfiguration
     {
+        public bool LosePercentageToggle;
         public bool PayTime;
         public List<Group> PayGroups;
         public int PayTimeSeconds;
@@ -31,6 +32,7 @@ namespace Uconomy_Essentials
 
         public void LoadDefaults()
         {
+            LosePercentageToggle = false;
             PayTime = false;
             PayGroups = new List<Group>() {
                 new Group{DisplayName = "all", Salary = 1.0m},

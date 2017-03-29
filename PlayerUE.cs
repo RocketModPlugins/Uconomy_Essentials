@@ -43,10 +43,17 @@ namespace Uconomy_Essentials
                 {
                     // We are going to remove currency for the suicide
                     decimal loss = (decimal)Uconomy_Essentials.Instance.Configuration.Instance.LoseSuicideAmt * -1.0m;
+                    if (Uconomy_Essentials.Instance.Configuration.Instance.LosePercentageToggle)
+                    {
+                        if (!(Uconomy_Essentials.Instance.Configuration.Instance.LoseSuicideAmt > 100.00))
+                        {
+                            loss = ((decimal)Uconomy_Essentials.Instance.Configuration.Instance.LoseSuicideAmt / 100) * bal * -1.0m;
+                        }
+                    }
                     if (bal + loss < 0.0m) loss = bal * -1.0m;
                     decimal bal1 = u.Database.IncreaseBalance(player.CSteamID.ToString(), loss);
                     Uconomy_Essentials.HandleEvent(player, (loss * -1.0m), "loss");
-                    UnturnedChat.Say(player.CSteamID, Uconomy_Essentials.Instance.Translate("lose_suicide_msg", new object[] {Uconomy_Essentials.Instance.Configuration.Instance.LoseSuicideAmt, u.Configuration.Instance.MoneyName}));
+                    UnturnedChat.Say(player.CSteamID, Uconomy_Essentials.Instance.Translate("lose_suicide_msg", new object[] {Convert.ToInt32(loss * -1.00M), u.Configuration.Instance.MoneyName}));
                     if (bal1 != 0m) UnturnedChat.Say(player.CSteamID, Uconomy_Essentials.Instance.Translate("new_balance_msg", new object[] {bal1, u.Configuration.Instance.MoneyName}));
                     return;
                 }
@@ -58,10 +65,17 @@ namespace Uconomy_Essentials
                 if (Uconomy_Essentials.Instance.Configuration.Instance.LoseMoneyOnDeath)
                 {
                     decimal loss = (decimal)Uconomy_Essentials.Instance.Configuration.Instance.LoseMoneyOnDeathAmt * -1.0m;
+                    if (Uconomy_Essentials.Instance.Configuration.Instance.LosePercentageToggle)
+                    {
+                        if (!(Uconomy_Essentials.Instance.Configuration.Instance.LoseSuicideAmt > 100.00))
+                        {
+                            loss = ((decimal)Uconomy_Essentials.Instance.Configuration.Instance.LoseMoneyOnDeathAmt / 100) * bal * -1.0m;
+                        }
+                    }
                     if (bal + loss < 0.0m) loss = bal * -1.0m;
                     decimal lostbal = u.Database.IncreaseBalance(player.CSteamID.ToString(), loss);
                     Uconomy_Essentials.HandleEvent(player, (loss * -1.0m), "loss");
-                    UnturnedChat.Say(player.CSteamID, Uconomy_Essentials.Instance.Translate("lose_money_on_death_msg", new object[] {Uconomy_Essentials.Instance.Configuration.Instance.LoseMoneyOnDeathAmt.ToString(), u.Configuration.Instance.MoneyName}));
+                    UnturnedChat.Say(player.CSteamID, Uconomy_Essentials.Instance.Translate("lose_money_on_death_msg", new object[] {Convert.ToInt32(loss * -1.00M), u.Configuration.Instance.MoneyName}));
                 }
                 // Pay the other player for the kill
                 decimal balk = u.Database.IncreaseBalance(murderer.ToString(), (decimal)Uconomy_Essentials.Instance.Configuration.Instance.PayHitAmt);
