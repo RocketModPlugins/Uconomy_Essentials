@@ -32,7 +32,7 @@ namespace Uconomy_Essentials
 
         public void LoadDefaults()
         {
-            LosePercentageToggle = true;
+            LosePercentageToggle = false;
             PayTime = false;
             PayGroups = new List<Group>() {
                 new Group{DisplayName = "all", Salary = 1.0m},
